@@ -4,6 +4,14 @@ import path from "node:path";
 // Netlify bundles this function; import.meta.url may be unavailable in its runtime bundle.
 // Netlify Functions run with the deployed site root as the working directory.
 const root = process.cwd();
+// Netlify Functions execute on AWS Lambda. NETLIFY is not guaranteed to be
+// present in the function runtime, so detect the Lambda runtime as well.
+const IS_NETLIFY_RUNTIME = Boolean(
+  process.env.NETLIFY ||
+  process.env.AWS_LAMBDA_FUNCTION_NAME ||
+  process.env.LAMBDA_TASK_ROOT ||
+  process.env.CONTEXT
+);
 const COOKIE = "avhyn_session";
 const SESSION_HOURS = 12;
 const COLLECTIONS = ["assets","stock","movements","projects","procurement","maintenance","locations","activity","users","settings"];
@@ -30,7 +38,7 @@ function verifySession(token) {
 }
 async function readCollection(name) {
   if (!COLLECTIONS.includes(name)) throw new Error("Unknown collection");
-  if (process.env.NETLIFY) {
+  if (IS_NETLIFY_RUNTIME) {
     const { getStore } = await import("@netlify/blobs");
     const store = getStore("aerovhyn-inventory-v1");
     const value = await store.get(name, {type:"json"});
@@ -45,7 +53,7 @@ async function readCollection(name) {
 }
 async function writeCollection(name,value) {
   if (!COLLECTIONS.includes(name)) throw new Error("Unknown collection");
-  if (process.env.NETLIFY) {
+  if (IS_NETLIFY_RUNTIME) {
     const { getStore } = await import("@netlify/blobs");
     const store = getStore("aerovhyn-inventory-v1");
     await store.setJSON(name,value);
@@ -72,18 +80,18 @@ export async function handler(event) {
   catch { return response(400,{error:"Invalid JSON request body"}); }
 
   try {
-    if (route==="health" && event.httpMethod==="GET") return response(200,{ok:true,service:"Aerovhyn Inventory API",storage:process.env.NETLIFY?"netlify-blobs":"local-json"});
+    if (route==="health" && event.httpMethod==="GET") return response(200,{ok:true,service:"Aerovhyn Inventory API",storage:IS_NETLIFY_RUNTIME?"netlify-blobs":"local-json"});
     if (route==="login" && event.httpMethod==="POST") {
       const users=await readCollection("users");
       const user=users.find(u=>u.username.toLowerCase()===String(body.username||"").trim().toLowerCase() && u.active!==false);
       if (!user || !safeEqual(user.password,String(body.password||""))) return response(401,{error:"Invalid username or password"});
       const token=issueSession(user);
       await addActivity(user,"LOGIN","Session","User signed in");
-      const secure = process.env.NETLIFY ? "; Secure" : "";
+      const secure = IS_NETLIFY_RUNTIME ? "; Secure" : "";
       return response(200,{ok:true,user:publicUser(user)},{ "Set-Cookie":`${COOKIE}=${encodeURIComponent(token)}; Path=/; HttpOnly${secure}; SameSite=Lax; Max-Age=${SESSION_HOURS*3600}` });
     }
     if (route==="logout" && event.httpMethod==="POST") {
-      const secure = process.env.NETLIFY ? "; Secure" : "";
+      const secure = IS_NETLIFY_RUNTIME ? "; Secure" : "";
       return response(200,{ok:true},{ "Set-Cookie":`${COOKIE}=; Path=/; HttpOnly${secure}; SameSite=Lax; Max-Age=0` });
     }
     const cookies=parseCookies(event.headers?.cookie||event.headers?.Cookie||"");
