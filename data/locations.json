@@ -1,0 +1,23 @@
+[
+  {
+    "id": "LOC-0001",
+    "name": "Main Office",
+    "type": "site",
+    "parentId": "",
+    "notes": "Aerovhyn office"
+  },
+  {
+    "id": "LOC-0002",
+    "name": "Rack A",
+    "type": "rack",
+    "parentId": "LOC-0001",
+    "notes": ""
+  },
+  {
+    "id": "LOC-0003",
+    "name": "Shelf 01",
+    "type": "shelf",
+    "parentId": "LOC-0002",
+    "notes": ""
+  }
+]

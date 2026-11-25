@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#101114">
+  <title>Aerovhyn | Asset & Inventory Control</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <div id="app">
+    <section class="login-shell" id="loginView">
+      <div class="login-card">
+        <div class="brand-mark">A</div>
+        <div class="eyebrow">AEROVHYN PRIVATE LIMITED</div>
+        <h1>Asset & Inventory<br><span>Control Center</span></h1>
+        <p class="muted">A secure workspace for company assets, stock and operations.</p>
+        <form id="loginForm">
+          <label>Username<input id="username" autocomplete="username" required placeholder="Enter username"></label>
+          <label>Password<input id="password" type="password" autocomplete="current-password" required placeholder="Enter password"></label>
+          <button class="primary full" type="submit">Sign in <span>→</span></button>
+          <p class="form-error" id="loginError"></p>
+        </form>
+        <div class="login-foot">Internal company system · Authorized users only</div>
+      </div>
+    </section>
+    <section class="app-shell hidden" id="appView">
+      <aside class="sidebar" id="sidebar">
+        <div class="side-brand"><div class="brand-mark small">A</div><div><b>AEROVHYN</b><small>INVENTORY CONTROL</small></div></div>
+        <nav id="mainNav">
+          <button class="nav-item active" data-page="dashboard"><span>◫</span> Overview</button>
+          <div class="nav-label">INVENTORY</div>
+          <button class="nav-item" data-page="assets"><span>▣</span> Fixed assets</button>
+          <button class="nav-item" data-page="stock"><span>▤</span> Consumable stock</button>\n          <button class="nav-item" data-page="movements"><span>⇄</span> Stock movements</button>
+          <button class="nav-item" data-page="locations"><span>⌖</span> Locations & bins</button>
+          <div class="nav-label">OPERATIONS</div>
+          <button class="nav-item" data-page="projects"><span>◇</span> Projects</button>
+          <button class="nav-item" data-page="procurement"><span>⇩</span> Procurement</button>
+          <button class="nav-item" data-page="maintenance"><span>⚙</span> Maintenance</button>
+          <div class="nav-label">ADMINISTRATION</div>
+          <button class="nav-item" data-page="activity"><span>≡</span> Audit activity</button>
+          <button class="nav-item" data-page="users"><span>♙</span> Users</button>
+        </nav>
+        <div class="side-bottom"><div class="user-chip"><div class="avatar" id="userAvatar">A</div><div class="user-meta"><b id="userName">Admin</b><small id="userRole">Administrator</small></div><button id="logoutBtn" title="Sign out">↗</button></div></div>
+      </aside>
+      <main class="main-area">
+        <header class="topbar"><button class="mobile-menu" id="menuBtn">☰</button><div><div class="crumb">AEROVHYN <span>/</span> <b id="pageCrumb">Overview</b></div><h2 id="pageTitle">Overview</h2></div><div class="top-actions"><span class="status-dot"></span><span class="status-text">Workspace active</span><button class="icon-btn" id="refreshBtn" title="Refresh">↻</button></div></header>
+        <div class="content" id="pageContent"></div>
+      </main>
+    </section>
+    <div class="toast" id="toast"></div>
+    <dialog id="recordDialog" class="record-dialog"><form id="recordForm" method="dialog"><div class="dialog-head"><div><div class="eyebrow" id="dialogEyebrow">NEW RECORD</div><h3 id="dialogTitle">Add record</h3></div><button type="button" class="icon-btn" id="closeDialog">×</button></div><div class="form-grid" id="dialogFields"></div><div class="dialog-actions"><button type="button" class="secondary" id="cancelDialog">Cancel</button><button class="primary" type="submit">Save record</button></div></form></dialog>
+  </div>
+  <script src="/app.js" defer></script>
+</body>
+</html>

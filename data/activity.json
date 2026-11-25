@@ -1,0 +1,10 @@
+[
+  {
+    "id": "ACT-0001",
+    "at": "2026-11-21T18:55:41.977Z",
+    "username": "admin",
+    "action": "LOGIN",
+    "entity": "Session",
+    "details": "User signed in"
+  }
+]

@@ -1,0 +1,66 @@
+[
+  {
+    "id": "USR-0001",
+    "username": "admin",
+    "displayName": "Administrator",
+    "role": "admin",
+    "password": "Avhyn@Admin2026",
+    "active": true
+  },
+  {
+    "id": "USR-0002",
+    "username": "team",
+    "displayName": "Team Account",
+    "role": "staff",
+    "password": "Avhyn@Team2026",
+    "active": true
+  },
+  {
+    "id": "USR-0003",
+    "username": "store",
+    "displayName": "Stores Manager",
+    "role": "manager",
+    "password": "Avhyn@Store2026",
+    "active": true
+  },
+  {
+    "id": "USR-0004",
+    "username": "engineering",
+    "displayName": "Engineering",
+    "role": "staff",
+    "password": "Avhyn@Eng2026",
+    "active": true
+  },
+  {
+    "id": "USR-0005",
+    "username": "procurement",
+    "displayName": "Procurement",
+    "role": "manager",
+    "password": "Avhyn@Proc2026",
+    "active": true
+  },
+  {
+    "id": "USR-0006",
+    "username": "technician",
+    "displayName": "Technician",
+    "role": "staff",
+    "password": "Avhyn@Tech2026",
+    "active": true
+  },
+  {
+    "id": "USR-0007",
+    "username": "projectlead",
+    "displayName": "Project Lead",
+    "role": "manager",
+    "password": "Avhyn@Project2026",
+    "active": true
+  },
+  {
+    "id": "USR-0008",
+    "username": "auditor",
+    "displayName": "Auditor",
+    "role": "viewer",
+    "password": "Avhyn@Audit2026",
+    "active": true
+  }
+]
