@@ -1,10 +1,9 @@
 import crypto from "node:crypto";
 import fs from "node:fs/promises";
 import path from "node:path";
-import { fileURLToPath } from "node:url";
-
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const root = path.resolve(__dirname, "../..");
+// Netlify bundles this function; import.meta.url may be unavailable in its runtime bundle.
+// Netlify Functions run with the deployed site root as the working directory.
+const root = process.cwd();
 const COOKIE = "avhyn_session";
 const SESSION_HOURS = 12;
 const COLLECTIONS = ["assets","stock","movements","projects","procurement","maintenance","locations","activity","users","settings"];
