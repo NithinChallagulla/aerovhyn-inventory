@@ -79,8 +79,15 @@ export async function handler(event) {
   try { if(event.body) body=JSON.parse(event.isBase64Encoded?Buffer.from(event.body,"base64").toString():event.body); }
   catch { return response(400,{error:"Invalid JSON request body"}); }
 
-  try {
+    try {
     if (route==="health" && event.httpMethod==="GET") return response(200,{ok:true,service:"Aerovhyn Inventory API",storage:IS_NETLIFY_RUNTIME?"netlify-blobs":"local-json"});
+
+    // Initialize Netlify Blobs for the Lambda-compatible runtime
+    if (IS_NETLIFY_RUNTIME) {
+      const { connectLambda } = await import("@netlify/blobs");
+      await connectLambda(event);
+    }
+
     if (route==="login" && event.httpMethod==="POST") {
       const users=await readCollection("users");
       const user=users.find(u=>u.username.toLowerCase()===String(body.username||"").trim().toLowerCase() && u.active!==false);
